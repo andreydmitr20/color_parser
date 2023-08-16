@@ -58,8 +58,7 @@
         colors["white"] = ["255,255,255;", "#fff"];
         colors["grey"] = ["238,238,238;", "#eee"];
         colors["black"] = ["0,0,0,1;", "#000"];
-        colors["a1"] = ["1;", "alpha 1"];
-        colors["a05"] = ["0.5;", "alpha 0.5"];
+
         let index = 0;
         let link = "";
         let data = "";
@@ -125,7 +124,9 @@
             " */ \n";
           //   textOut += "--bg-color-" + item[0] + ":" + item[1] + "\n";
         });
-
+        textOut += "--a1:1; /* alpha 1 */\n";
+        textOut += "--a04:0.4; /* alpha 0.4 */\n";
+        textOut += "--a08:0.8; /* alpha 0.8 */\n";
         textOut += "}\n";
 
         Object.entries(colors).map((item) => {
