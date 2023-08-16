@@ -1,0 +1,64 @@
+/*
+https://colorscheme.ru/#0011Tw0w0w0w0 
+*/
+:root {
+  --color-0: 255, 0, 0; /* #ff0000 */
+  --color-1: 191, 48, 48; /* #bf3030 */
+  --color-2: 166, 0, 0; /* #a60000 */
+  --color-3: 255, 64, 64; /* #ff4040 */
+  --color-4: 255, 115, 115; /* #ff7373 */
+  --color-white: 255, 255, 255; /* #fff */
+  --color-grey: 238, 238, 238; /* #eee */
+  --color-black: 0, 0, 0, 1; /* #000 */
+  --a1: 1; /* alpha 1 */
+  --a04: 0.4; /* alpha 0.4 */
+  --a08: 0.8; /* alpha 0.8 */
+}
+.color-0 {
+  color: rgba(var(--color-0), var(--a1));
+}
+.bg-color-0 {
+  background-color: rgba(var(--color-0), var(--a1));
+}
+.color-1 {
+  color: rgba(var(--color-1), var(--a1));
+}
+.bg-color-1 {
+  background-color: rgba(var(--color-1), var(--a1));
+}
+.color-2 {
+  color: rgba(var(--color-2), var(--a1));
+}
+.bg-color-2 {
+  background-color: rgba(var(--color-2), var(--a1));
+}
+.color-3 {
+  color: rgba(var(--color-3), var(--a1));
+}
+.bg-color-3 {
+  background-color: rgba(var(--color-3), var(--a1));
+}
+.color-4 {
+  color: rgba(var(--color-4), var(--a1));
+}
+.bg-color-4 {
+  background-color: rgba(var(--color-4), var(--a1));
+}
+.color-white {
+  color: rgba(var(--color-white), var(--a1));
+}
+.bg-color-white {
+  background-color: rgba(var(--color-white), var(--a1));
+}
+.color-grey {
+  color: rgba(var(--color-grey), var(--a1));
+}
+.bg-color-grey {
+  background-color: rgba(var(--color-grey), var(--a1));
+}
+.color-black {
+  color: rgba(var(--color-black), var(--a1));
+}
+.bg-color-black {
+  background-color: rgba(var(--color-black), var(--a1));
+}
