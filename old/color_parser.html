@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color parser</title>
+
+    <style>
+      .w-100-row {
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+      }
+      .w-100-col {
+        width: 100%;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+      }
+      .text-center {
+        text-align: center;
+      }
+      .m-5 {
+        margin: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="w-100-row">
+        <a href="https://colorscheme.ru/">
+          1. Select color scheme and copy exported as SASS
+        </a>
+      </div>
+
+      <div class="w-100-col">
+        <p class="text-center">2. Paste to this textarea</p>
+        <textarea id="text-input" cols="40" rows="10"> </textarea>
+      </div>
+
+      <div class="w-100-row m-5">
+        <button id="parse-btn">3. Press to parse colors</button>
+      </div>
+
+      <div class="w-100-col">
+        <p class="text-center">4. Copy result & paste it to colors.css</p>
+        <textarea id="text-output" cols="40" rows="10"> </textarea>
+      </div>
+    </div>
+    <script>
+      let textInput = document.querySelector("#text-input");
+      let textOutput = document.querySelector("#text-output");
+      let parseBtn = document.querySelector("#parse-btn");
+
+      const parseColors = (e) => {
+        let colors = {};
+        colors["white"] = ["rgba(255,255,255,1);", "#fff"];
+        colors["grey"] = ["rgba(238,238,238,1);", "#eee"];
+        colors["black"] = ["rgba(0,0,0,1);", "#000"];
+        let index = 0;
+        let link = "";
+        let data = "";
+        let key = "";
+        textInput.value.split("\n").map((line) => {
+          index = line.indexOf("https://");
+          if (index > 0) {
+            // link to color scheme
+            link = "/*\n" + line.substr(index);
+            link = link.trim().replace("*/", "\n*/");
+          } else {
+            index = line.indexOf("rgba");
+            if (index > 0) {
+              // rgb
+              index = line.indexOf(":");
+              let index1 = line.indexOf(";", index + 1);
+              data = line.substr(index + 2, index1 - 1 - index);
+              key = line
+                .substr(7, index - 7)
+                .replace("primary-", "")
+                .replace("secondary-", "")
+                .replace("complement-", "c")
+                .replace("-", "");
+              if (!colors.hasOwnProperty(key)) {
+                colors[key] = [];
+              }
+              colors[key].unshift(data);
+            } else {
+              index = line.indexOf("#");
+              if (index > 0) {
+                // hex
+                index = line.indexOf(":");
+                let index1 = line.indexOf(";", index + 1);
+                data = line.substr(index + 2, index1 - 2 - index);
+                key = line
+                  .substr(7, index - 7)
+                  .replace("primary-", "")
+                  .replace("secondary-", "")
+                  .replace("complement-", "c")
+                  .replace("-", "");
+                if (!colors.hasOwnProperty(key)) {
+                  colors[key] = [];
+                }
+                colors[key].push(data);
+              }
+            }
+          }
+        });
+
+        console.log(colors);
+
+        let textOut = link + "\n" + ":root {\n";
+
+        Object.entries(colors).map((item) => {
+          console.log(item);
+          textOut +=
+            "--color-" +
+            item[0] +
+            ":" +
+            item[1][0] +
+            "/* " +
+            item[1][1] +
+            " */ \n";
+          //   textOut += "--bg-color-" + item[0] + ":" + item[1] + "\n";
+        });
+
+        textOut += "}\n";
+
+        Object.entries(colors).map((item) => {
+          textOut +=
+            ".color-" +
+            item[0] +
+            " {\n" +
+            "color: var(--color-" +
+            item[0] +
+            ");}\n";
+          textOut +=
+            ".bg-color-" +
+            item[0] +
+            " {\n" +
+            "background-color: var(--color-" +
+            item[0] +
+            ");}\n";
+        });
+
+        textOutput.value = textOut;
+      };
+
+      parseBtn.addEventListener("click", parseColors);
+    </script>
+  </body>
+</html>
